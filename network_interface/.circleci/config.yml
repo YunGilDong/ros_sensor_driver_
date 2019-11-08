@@ -1,14 +1,14 @@
 version: 2
 jobs:
-  indigo:
+  kinetic_x86:
     docker:
-      - image: ros:indigo-ros-core
+      - image: autonomoustuff/docker-builds:kinetic-ros-base
     steps:
       - checkout
       - run:
           name: Set Up Container
           command: |
-            apt-get update && apt-get install openssh-client python-catkin-tools build-essential -y
+            apt update -qq
             source `find /opt/ros -name setup.bash | sort | head -1`
             rosdep install --from-paths . --ignore-src -y
             cd ..
@@ -22,45 +22,55 @@ jobs:
       - run:
           name: Run Tests
           command: |
+            source /opt/ros/kinetic/setup.bash
             cd ..
             catkin run_tests
+            catkin_test_results
     working_directory: ~/src
 
-  kinetic:
-    docker:
-      - image: ros:kinetic-ros-core
+  kinetic_armhf:
+    machine:
+      image: circleci/classic:latest
+      docker_layer_caching: true
     steps:
       - checkout
       - run:
-          name: Set Up Container
+          name: Install QEMU on Machine
           command: |
-            apt-get update && apt-get install openssh-client python-catkin-tools build-essential -y
-            source `find /opt/ros -name setup.bash | sort | head -1`
-            rosdep install --from-paths . --ignore-src -y
-            cd ..
-            catkin init
-            catkin config --extend /opt/ros/$ROS_DISTRO
+            sudo apt-get update -qq && sudo apt-get install -y dpkg qemu-user-static
       - run:
-          name: Build
+          name: Clone and Run AS Docker Image
           command: |
-            cd ..
-            catkin build
+            docker pull autonomoustuff/docker-builds:kinetic-ros-base
+            docker run -d --name test -v /usr/bin/qemu-arm-static:/usr/bin/qemu-arm-static -v `pwd`:/ros_ws/src -w /ros_ws autonomoustuff/docker-builds:kinetic-ros-base sh -c "sleep infinity"
       - run:
-          name: Run Tests
+          name: Set Up ROS in Docker
           command: |
-            cd ..
-            catkin run_tests
+            docker exec test /bin/bash -c "source \`find /opt/ros -name setup.bash | sort | head -1\` && rosdep install --from-paths src --ignore-src -y"
+            docker exec test /bin/bash -c "source \`find /opt/ros -name setup.bash | sort | head -1\` && catkin init && catkin config --extend /opt/ros/\$ROS_DISTRO"
+      - run:
+          name: Build in Docker
+          command: |
+            docker exec test /bin/bash -c "source \`find /opt/ros -name setup.bash | sort | head -1\` && catkin build"
+      - run:
+          name: Run Tests in Docker
+          command: |
+            docker exec test /bin/bash -c "source \`find /opt/ros -name setup.bash | sort | head -1\` && catkin run_tests -j1 && catkin_test_results"
+      - run:
+          name: Shut Down Container
+          command: |
+            docker kill $(docker ps -l -q)
     working_directory: ~/src
 
-  lunar:
+  melodic_x86:
     docker:
-      - image: ros:lunar-ros-core
+      - image: autonomoustuff/docker-builds:melodic-ros-base
     steps:
       - checkout
       - run:
           name: Set Up Container
           command: |
-            apt-get update && apt-get install openssh-client python-catkin-tools build-essential -y
+            apt-get update -qq
             source `find /opt/ros -name setup.bash | sort | head -1`
             rosdep install --from-paths . --ignore-src -y
             cd ..
@@ -74,41 +84,51 @@ jobs:
       - run:
           name: Run Tests
           command: |
+            source /opt/ros/melodic/setup.bash
             cd ..
             catkin run_tests
+            catkin_test_results
     working_directory: ~/src
 
-  melodic:
-    docker:
-      - image: ros:melodic-ros-core
+  melodic_armhf:
+    machine:
+      image: circleci/classic:latest
+      docker_layer_caching: true
     steps:
       - checkout
       - run:
-          name: Set Up Container
+          name: Install QEMU on Machine
           command: |
-            apt-get update && apt-get install openssh-client python-catkin-tools build-essential -y
-            source `find /opt/ros -name setup.bash | sort | head -1`
-            rosdep install --from-paths . --ignore-src -y
-            cd ..
-            catkin init
-            catkin config --extend /opt/ros/$ROS_DISTRO
+            sudo apt-get update -qq && sudo apt-get install -y dpkg qemu-user-static
       - run:
-          name: Build
+          name: Clone and Run AS Docker Image
           command: |
-            cd ..
-            catkin build
+            docker pull autonomoustuff/docker-builds:melodic-ros-base
+            docker run -d --name test -v /usr/bin/qemu-arm-static:/usr/bin/qemu-arm-static -v `pwd`:/ros_ws/src -w /ros_ws autonomoustuff/docker-builds:melodic-ros-base sh -c "sleep infinity"
       - run:
-          name: Run Tests
+          name: Set Up ROS in Docker
           command: |
-            cd ..
-            catkin run_tests
+            docker exec test /bin/bash -c "source \`find /opt/ros -name setup.bash | sort | head -1\` && rosdep install --from-paths src --ignore-src -y"
+            docker exec test /bin/bash -c "source \`find /opt/ros -name setup.bash | sort | head -1\` && catkin init && catkin config --extend /opt/ros/\$ROS_DISTRO"
+      - run:
+          name: Build in Docker
+          command: |
+            docker exec test /bin/bash -c "source \`find /opt/ros -name setup.bash | sort | head -1\` && catkin build"
+      - run:
+          name: Run Tests in Docker
+          command: |
+            docker exec test /bin/bash -c "source \`find /opt/ros -name setup.bash | sort | head -1\` && catkin run_tests -j1 && catkin_test_results"
+      - run:
+          name: Shut Down Container
+          command: |
+            docker kill $(docker ps -l -q)
     working_directory: ~/src
 
 workflows:
   version: 2
   ros_build:
     jobs:
-      - indigo
-      - kinetic
-      - lunar
-      - melodic
+      - kinetic_x86
+      - melodic_x86
+      - kinetic_armhf
+      - melodic_armhf
