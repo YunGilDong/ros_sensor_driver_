@@ -20,7 +20,7 @@ void IbeoLuxRosMsgHandler::fillAndPublish(
     const std::string& frame_id,
     const ros::Publisher& pub,
     IbeoTxMessage * parser_class)
-{    
+{
   if (type_id == ErrorWarning::DATA_TYPE)
   {
     ibeo_msgs::ErrorWarning new_msg;
@@ -40,13 +40,13 @@ void IbeoLuxRosMsgHandler::fillAndPublish(
     pub.publish(new_msg);
   }
   else if (type_id == ScanData2205::DATA_TYPE)
-  {     
+  {
     ibeo_msgs::ScanData2205 new_msg;
     fill2205(parser_class, &new_msg, frame_id);
     pub.publish(new_msg);
   }
   else if (type_id == ObjectData2221::DATA_TYPE)
-  {  
+  {
     ibeo_msgs::ObjectData2221 new_msg;
     fill2221(parser_class, &new_msg, frame_id);
     pub.publish(new_msg);
@@ -64,7 +64,7 @@ void IbeoLuxRosMsgHandler::fillAndPublish(
     pub.publish(new_msg);
   }
   else if (type_id == CameraImage::DATA_TYPE)
-  {   
+  {
     ibeo_msgs::CameraImage new_msg;
     fill2403(parser_class, &new_msg, frame_id);
     pub.publish(new_msg);
