@@ -49,7 +49,10 @@ Kvaser 인터페이스 드라이버 설치:
 
 ROS에서 지원하는 Kvaser CAN 인터페이스 노드를 설치힌다.
 
+Radar센서 드라이버 설치:
 
+    $sudo apt install ros-$ROS_DISTRO-delphi-esr
+    
 2.Cemara센서 드라이버
 -----------------------------------
 위키 참고
