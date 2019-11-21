@@ -36,7 +36,7 @@ Kvaser CAN 채널 정보가 출력이 되면 정상적으로 설치가 완료가
 
 Kvaser 인터페이스 노드 설치:    
 
-    sudo apt install ros-$ROS_DISTRO-kvaser-interface
+    $sudo apt install ros-$ROS_DISTRO-kvaser-interface
 
 ROS에서 지원하는 Kvaser CAN 인터페이스 노드를 설치힌다.
 
@@ -57,20 +57,20 @@ SDK 다운로드:
 
 SDK 설치:
 
-    cd ~/Downloads/
-    sudo dpkg -i pylon_5.2.0.13457-deb0_amd64.deb
+    $ cd ~/Downloads/
+    $ sudo dpkg -i pylon_5.2.0.13457-deb0_amd64.deb
 
 ROS 패키지 의존성 구성:
 
-    sudo sh -c 'echo "yaml https://raw.githubusercontent.com/magazino/pylon_camera/indigo-devel/rosdep/pylon_sdk.yaml " > /etc/ros/rosdep/sources.list.d/15-plyon_camera.list'
-    rosdep update
+    $ sudo sh -c 'echo "yaml https://raw.githubusercontent.com/magazino/pylon_camera/indigo-devel/rosdep/pylon_sdk.yaml " > /etc/ros/rosdep/sources.list.d/15-plyon_camera.list'
+    $ rosdep update
 
 
 source 다운 및 빌드:    
 
-    cd ~/catkin_ws/src/ && git clone https://github.com/magazino/pylon_camera.git && git clone https://github.com/magazino/camera_control_msgs.git
-    rosdep install --from-paths . --ignore-src —rosdistro=$ROS_DISTRO -y
-    cd ~/catkin_ws && catkin_make
+    $ cd ~/catkin_ws/src/ && git clone https://github.com/magazino/pylon_camera.git && git clone https://github.com/magazino/camera_control_msgs.git
+    $ rosdep install --from-paths . --ignore-src --rosdistro=$ROS_DISTRO -y
+    $ cd ~/catkin_ws && catkin_make
 
 ### pylon camera 노드 설정 ###
 설정 파일은 수정하여 인코딩 값을 변경해야 한다.
