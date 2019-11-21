@@ -5,7 +5,7 @@ ubuntu 패캐지 업데이트:
 
     sudo apt-get update  
 
-1.Kvaser Can 드라이버
+1.Kvaser Can 드라이버 & Radar센서 드라이버 설치
 -----------------------------------
 Kvaser Can을 사용하기 위한 sdk & 드라이버
 
@@ -45,6 +45,7 @@ Kvaser 인터페이스 드라이버 설치:
     $sudo apt-add-repository ppa:jwhitleyastuff/kvaser-linux
     $sudo apt-get update
     $sudo apt install ros-$ROS_DISTRO-kvaser-interface
+    $sudo apt install ros-$ROS_DISTRO-delphi-esr
 
 ROS에서 지원하는 Kvaser CAN 인터페이스 노드를 설치힌다.
 
