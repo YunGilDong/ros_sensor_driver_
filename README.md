@@ -72,6 +72,16 @@ source 다운 및 빌드:
     rosdep install --from-paths . --ignore-src —rosdistro=$ROS_DISTRO -y
     cd ~/catkin_ws && catkin_make
 
+### pylon camera 노드 설정 ###
+설정 파일은 수정하여 인코딩 값을 변경해야 한다.
+
+ * `설정 파일 위치`: roscd pylon_camera/config/
+
+default.yaml:
+
+    image_encoding: "bayer_bggr8"
+
+image_encoding 값을 "bayer_bggr8" 로 수정해야 한다.
 
 3.ROS 센서 드라이버
 -----------------------------------
