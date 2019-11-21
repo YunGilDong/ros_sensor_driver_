@@ -3,8 +3,7 @@
 
 ubuntu 패캐지 업데이트:
 
-    sudo apt-get update
-    sudo apt-get upgrade    
+    sudo apt-get update  
 
 1.Kvaser Can 드라이버
 -----------------------------------
