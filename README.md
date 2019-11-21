@@ -40,6 +40,8 @@ Kvaser CAN 채널 정보가 출력이 되면 정상적으로 설치가 완료가
 
 Kvaser 인터페이스 노드 설치:    
 
+    $sudo apt-add-repository ppa:jwhitleyastuff/kvaser-linux
+    $sudo apt-get update
     $sudo apt install ros-$ROS_DISTRO-kvaser-interface
 
 ROS에서 지원하는 Kvaser CAN 인터페이스 노드를 설치힌다.
