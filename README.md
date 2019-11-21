@@ -38,7 +38,7 @@ Download Kvaser Linux Driver and SDK:
 Kvaser CAN 채널 정보가 출력이 되면 정상적으로 설치가 완료가 된것이다.
 
 
-Kvaser 인터페이스 노드 설치:    
+Kvaser 인터페이스 드라이버 설치:    
 
     $sudo apt update && sudo apt install apt-transport-https
     $sudo sh -c 'echo "deb [trusted=yes] https://s3.amazonaws.com/autonomoustuff-repo/ $(lsb_release -sc) main" > /etc/apt/sources.list.d/autonomoustuff-public.list'
