@@ -1,6 +1,11 @@
 트램 센서 드라이버
 ===================================
 
+ubuntu 패캐지 업데이트:
+
+    sudo apt-get update
+    sudo apt-get upgrade    
+
 1.Kvaser Can 드라이버
 -----------------------------------
 Kvaser Can을 사용하기 위한 sdk & 드라이버
