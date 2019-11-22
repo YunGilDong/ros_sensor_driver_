@@ -103,3 +103,4 @@ source 다운 및 빌드:
 
     cd ~/catkin_ws/src/ && git clone https://github.com/YunGilDong/ros_sensor_driver_.git    
     cd ~/catkin_ws && catkin_make
+    source devel/setup.bash
