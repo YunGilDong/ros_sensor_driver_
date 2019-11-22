@@ -43,7 +43,7 @@ Kvaser 인터페이스 드라이버 설치:
     $sudo apt update && sudo apt install apt-transport-https
     $sudo sh -c 'echo "deb [trusted=yes] https://s3.amazonaws.com/autonomoustuff-repo/ $(lsb_release -sc) main" > /etc/apt/sources.list.d/autonomoustuff-public.list'
     $sudo apt-add-repository ppa:jwhitleyastuff/kvaser-linux
-    $sudo apt-get update
+    $sudo apt update
     $sudo apt install ros-$ROS_DISTRO-kvaser-interface
 
 ROS에서 지원하는 Kvaser CAN 인터페이스 노드를 설치힌다.
