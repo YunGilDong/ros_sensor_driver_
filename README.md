@@ -104,3 +104,45 @@ source 다운 및 빌드:
     cd ~/catkin_ws/src/ && git clone https://github.com/YunGilDong/ros_sensor_driver_.git    
     cd ~/catkin_ws && catkin_make
     source devel/setup.bash
+
+4.Kvaser Can 드라이버 파라미터 설정
+-----------------------------------
+
+###  1) HardwareID, Circuit ID 확인 ###
+Kvaser 인터페이스 드라이버를 사용하기 위해선 "CAN Circuit ID, Channel index"를 설정해야 한다.
+
+ * `CAN Hardware and Circuit IDs Config URL`: https://autonomoustuff.atlassian.net/wiki/spaces/RW/pages/17472305/Populate+CAN+Hardware+and+Circuit+IDs
+
+ 위 싸이트를 참조하여 CAN device의 HardwareID, Circuit를 확인한다. Circuit ID는 채널 인덱스를 나타낸다.
+
+ ###  2) 런치파일 파라미터 변경 ###
+ 위 싸이트를 참조하여 CAN device의 HardwareID, Circuit를 확인한다.
+ can_hardware_id = hardwareID
+ can_circuit_id = circuit id
+
+런치 파일 open:
+
+    $ roscd kvaser_interface/launch/
+    $ sudo vi kvaser_can_bridge.launch
+
+ ```xml
+    <arg name="can_hardware_id" default="65746" />
+    <arg name="can_circuit_id" default="0" />
+    <arg name="can_bit_rate" default="500000" />`
+```
+
+5.GPS 드라이버 파라미터 설정
+-----------------------------------
+
+ ###  1) 시리얼 포트 & baud 설정 ###
+ 런치파일 파라미터에 시리얼 포트 및 buad 값을 입력 한다.
+
+런치 파일 open:
+
+    $ roscd nmea_navsat_driver/launch/
+    $ vi nmea_serial_driver.launch
+
+```xml
+    <arg name="port" default="/dev/ttyUSB0" />
+    <arg name="baud" default="115200" />
+```
