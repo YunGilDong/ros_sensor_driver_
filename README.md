@@ -3,7 +3,7 @@
 
 ubuntu 패캐지 업데이트:
 
-    sudo apt-get update  
+    sudo apt update  
 
 1.Kvaser Can 드라이버 & Radar센서 드라이버 설치
 -----------------------------------
