@@ -109,7 +109,7 @@ source 다운 및 빌드:
 -----------------------------------
 
 ###  1) HardwareID, Circuit ID 확인 ###
-Kvaser 인터페이스 드라이버를 사용하기 위해선 "CAN Circuit ID, Channel index"를 설정해야 한다.
+Kvaser 인터페이스 드라이버를 사용하기 위해선 "CAN Hardware ID, Circuit ID"를 설정해야 한다.
 
  * `CAN Hardware and Circuit IDs Config URL`: https://autonomoustuff.atlassian.net/wiki/spaces/RW/pages/17472305/Populate+CAN+Hardware+and+Circuit+IDs
 
